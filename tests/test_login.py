@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 import json
 import pytest
 
@@ -83,11 +82,15 @@ class TestStellarBurgersLoginForm:
         driver.get('https://stellarburgers.nomoreparties.site/login')
         # Локатор Email
         driver.find_element(By.XPATH,
-                            ".//label[text()='Email']//parent::*/input[@type='text' and @name='name']").send_keys('qwe')
+                            ".//label[text()='Email']//parent::*/input[@type='text' and @name='name']").send_keys('conclude2081@outlook.com')
         driver.find_element(By.XPATH, ".//input[@type='password' and @name='Пароль']").send_keys(password_list)
         driver.find_element(By.XPATH, ".//button[text()='Войти']").click()
         # Находим сообщение об ошибке
         error_message = driver.find_element(By.XPATH, ".//p[contains(@class, 'input__error')]")
         assert error_message.text == 'Некорректный пароль'
 
+    def test_login_correct_email_and_password_show_main_page(self, login):
+        """При вводе корректных данных отображается основная страничка"""
+        driver = login
+        assert driver.current_url == 'https://stellarburgers.nomoreparties.site/'
 
