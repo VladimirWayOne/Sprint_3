@@ -7,6 +7,7 @@ from mimesis.enums import Locale
 import json
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from tests.locators import *
 
 
 person = Person(locale=Locale.RU)
@@ -51,11 +52,10 @@ def login(driver):
     json_file.close()
     driver.get('https://stellarburgers.nomoreparties.site/login')
     # Локатор Email
-    driver.find_element(By.XPATH,
-                        ".//label[text()='Email']//parent::*/input[@type='text' and @name='name']").send_keys(
+    driver.find_element(*locator_email_field).send_keys(
         data['email'])
-    driver.find_element(By.XPATH, ".//input[@type='password' and @name='Пароль']").send_keys(data['password'])
-    driver.find_element(By.XPATH, ".//button[text()='Войти']").click()
+    driver.find_element(*locator_password_field).send_keys(data['password'])
+    driver.find_element(*locator_login_button_any_forms).click()
     # Ожидание появления кнопки "Оформить заказ"
-    WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, ".//button[text()='Оформить заказ']")))
+    WebDriverWait(driver, 3).until(EC.presence_of_element_located(locator_order_button))
     return driver, data
