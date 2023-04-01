@@ -1,2 +1,6 @@
 .idea
 data_generator.py
+*.txt
+*.json
+*.pytest_cache
+__pycache__
