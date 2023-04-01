@@ -97,7 +97,7 @@ class TestStellarBurgersRegistration:
         # Находим кнопку зарегистрироваться и нажимаем
         driver.find_element(*locator_login_button).click()
         # Находим поле для ввода имени
-        driver.find_element(*locator_email_field).send_keys(
+        driver.find_element(*locator_name_field).send_keys(
             user_data['full_name'])
         # Находим поле для ввода Email
         driver.find_element(*locator_email_field).send_keys(user_data['email'])
