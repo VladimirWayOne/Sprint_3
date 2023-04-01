@@ -40,11 +40,12 @@ def user_data():
     with open('json_data.json', 'w', encoding='utf-8') as outfile:
         outfile.write(user_creds)
     outfile.close()
-    return
+    return user_data
 
 
 @pytest.fixture(scope='function')
 def login(driver):
+    """ Войти в аккаунт"""
     with open('json_data.json', 'r') as json_file:
         data = json.load(json_file)
     json_file.close()
