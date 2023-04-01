@@ -91,6 +91,6 @@ class TestStellarBurgersLoginForm:
 
     def test_login_correct_email_and_password_show_main_page(self, login):
         """При вводе корректных данных отображается основная страничка"""
-        driver = login
+        driver, _ = login
         assert driver.current_url == 'https://stellarburgers.nomoreparties.site/'
 

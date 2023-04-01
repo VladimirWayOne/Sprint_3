@@ -57,4 +57,4 @@ def login(driver):
     driver.find_element(By.XPATH, ".//button[text()='Войти']").click()
     # Ожидание появления кнопки "Оформить заказ"
     WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, ".//button[text()='Оформить заказ']")))
-    return driver
+    return driver, data
