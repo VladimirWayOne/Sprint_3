@@ -53,8 +53,7 @@ class TestStellarBurgersRegistration:
 
         driver.find_element(*locators.locator_register_button).click()
 
-        time.sleep(2)
-
+        WebDriverWait(driver, 3).until(EC.element_to_be_clickable(locators.locator_register_button))
         errors_messages = driver.find_elements(*locators.locator_error_message)
         assert driver.current_url == urls.url_register and len(errors_messages) == 0
 
