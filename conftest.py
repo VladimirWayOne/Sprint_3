@@ -14,7 +14,7 @@ person = Person(locale=Locale.RU)
 url = 'https://stellarburgers.nomoreparties.site/'
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def driver():
     options = Options()
     options.add_argument("--window-size=1500,900")
@@ -26,7 +26,7 @@ def driver():
     driver.quit()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def user_data():
     """
     Генерация валидных данных
@@ -44,7 +44,7 @@ def user_data():
     return user_data
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def login(driver):
     """ Войти в аккаунт"""
     with open('json_data.json', 'r') as json_file:
