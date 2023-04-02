@@ -37,7 +37,7 @@ class TestStellarBurgersRegistration:
 
     def test_registration_empty_name_nothing_happens(self, driver):
         """
-        При пустом поле Имя после нажатия на кнопку Зарегистрироваться ничего не происходит
+        При пустом поле Имя после нажатия на кнопку Зарегистрироваться ничего не происходит: нет ошибки и нет перехода на страницу входа
         :param driver:
         :return:
         """
@@ -50,14 +50,14 @@ class TestStellarBurgersRegistration:
         driver.find_element(*locators.locator_email_field).send_keys('qwe@owfinwE.YU')
 
         driver.find_element(*locators.locator_password_field).send_keys("""v)j"MY""")
-        old_DOM = driver.find_element(By.XPATH, ".//*")
 
         driver.find_element(*locators.locator_register_button).click()
 
         time.sleep(2)
-        new_DOM = driver.find_element(By.XPATH, ".//*")
 
-        assert old_DOM == new_DOM
+        errors_messages = driver.find_elements(*locators.locator_error_message)
+        assert driver.current_url == urls.url_register and len(errors_messages) == 0
+
 
     def test_registration_incorrect_password_show_error(self, driver):
         """
