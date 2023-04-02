@@ -12,7 +12,7 @@ class Locators:
     locator_error_message = (By.XPATH, ".//p[contains(@class, 'input__error')]")	                                        # Сообщение об ошибке при регистрации
     locator_order_button = (By.XPATH, ".//button[text()='Оформить заказ']")	                                                # Кнопка Оформить заказ
     locator_login_button_any_forms = (By.XPATH, ".//button[text()='Войти']")	                                            # Кнопка Войти в различных формах
-    locator_info_message_profile = (By.XPATH, ".//p[contains(text(),'персональные данные']")                                # Надпись в личном кабинете
+    locator_info_message_profile = (By.XPATH, ".//p[contains(text(),'персональные данные')]")                                # Надпись в личном кабинете
     locator_constructor_button = (By.XPATH, ".//p[text()='Конструктор']")	                                                # Кнопка Конструктор
     locator_logo = (By.XPATH, ".//div[@class='AppHeader_header__logo__2D0X2']")	                                            # Логотип вверху станицы
     locator_login_text_login_form = (By.XPATH, ".//h2[text()='Вход']")	                                                    # Надпись Вход в форме Логина
