@@ -19,7 +19,7 @@ def driver():
     options = Options()
     options.add_argument("--window-size=1500,900")
 
-    driver = webdriver.Chrome(options=options, executable_path=r"D:\Distrib\chromedriver.exe")
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
 
     yield driver
@@ -49,13 +49,12 @@ def login(driver):
     """ Войти в аккаунт"""
     with open('json_data.json', 'r') as json_file:
         data = json.load(json_file)
-    json_file.close()
     driver.get('https://stellarburgers.nomoreparties.site/login')
-    # Локатор Email
+
     driver.find_element(*locator_email_field).send_keys(
         data['email'])
     driver.find_element(*locator_password_field).send_keys(data['password'])
     driver.find_element(*locator_login_button_any_forms).click()
-    # Ожидание появления кнопки "Оформить заказ"
+
     WebDriverWait(driver, 3).until(EC.presence_of_element_located(locator_order_button))
-    return driver, data
+    return driver
