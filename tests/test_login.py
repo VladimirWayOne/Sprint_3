@@ -4,8 +4,9 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 import pytest
 
-from locators import *
+from locators import Locators
 
+locators = Locators()
 
 class TestStellarBurgersLoginForm:
     def test_login_sign_in_button_show_login_page(self, driver):
@@ -16,28 +17,28 @@ class TestStellarBurgersLoginForm:
 
     def test_login_personal_account_button_show_login_page(self, driver):
         """Проверка входа через кноку 'Личный Кабинет'"""
-        driver.find_element(*locator_profile_button).click()
+        driver.find_element(*locators.locator_profile_button).click()
         assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login'
 
     def test_login_registration_form_sign_in_button(self, driver):
         """Проверка входа через кнопку 'Войти' в форме регистрации"""
 
         driver.get('https://stellarburgers.nomoreparties.site/register')
-        driver.find_element(*locator_login_text_with_href).click()
+        driver.find_element(*locators.locator_login_text_with_href).click()
         assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login'
 
     def test_login_forgot_password_form_sign_in_button(self, driver):
         """Проверка входа через кнопку 'Войти' в форме 'Восстановление пароля' этап ввода почты"""
 
         driver.get('https://stellarburgers.nomoreparties.site/forgot-password')
-        driver.find_element(*locator_login_text_with_href).click()
+        driver.find_element(*locators.locator_login_text_with_href).click()
         assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login'
 
     def test_login_reset_password_form_sign_in_button(self, driver):
         """Проверка входа через кнопку 'Войти' в форме 'Восстановление пароля' этап ввода нового пароля и кода из письма"""
 
         driver.get('https://stellarburgers.nomoreparties.site/forgot-password')
-        driver.find_element(*locator_login_text_with_href).click()
+        driver.find_element(*locators.locator_login_text_with_href).click()
         assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login'
 
     def test_login_empty_email_and_password_nothing_happens(self, driver):
@@ -45,7 +46,7 @@ class TestStellarBurgersLoginForm:
         driver.get('https://stellarburgers.nomoreparties.site/login')
 
         old_DOM = driver.find_elements(By.XPATH, ".//*")
-        driver.find_element(*locator_login_button_any_forms).click()
+        driver.find_element(*locators.locator_login_button_any_forms).click()
 
         new_DOM = driver.find_elements(By.XPATH, ".//*")
         assert old_DOM == new_DOM
@@ -54,10 +55,10 @@ class TestStellarBurgersLoginForm:
         """При вводе некорректного логина ничего не происходит"""
         driver.get('https://stellarburgers.nomoreparties.site/login')
 
-        driver.find_element(*locator_email_field).send_keys('qwe')
+        driver.find_element(*locators.locator_email_field).send_keys('qwe')
 
         old_DOM = driver.find_elements(By.XPATH, ".//*")
-        driver.find_element(*locator_login_button_any_forms).click()
+        driver.find_element(*locators.locator_login_button_any_forms).click()
 
         new_DOM = driver.find_elements(By.XPATH, ".//*")
         assert old_DOM == new_DOM
@@ -66,11 +67,11 @@ class TestStellarBurgersLoginForm:
         """При вводе некорректного пароля длинной 6 символов ничего не происходит"""
         driver.get('https://stellarburgers.nomoreparties.site/login')
 
-        driver.find_element(*locator_email_field).send_keys('qwe')
-        driver.find_element(*locator_password_field).send_keys("123456")
+        driver.find_element(*locators.locator_email_field).send_keys('qwe')
+        driver.find_element(*locators.locator_password_field).send_keys("123456")
 
         old_DOM = driver.find_elements(By.XPATH, ".//*")
-        driver.find_element(*locator_login_button_any_forms).click()
+        driver.find_element(*locators.locator_login_button_any_forms).click()
 
         new_DOM = driver.find_elements(By.XPATH, ".//*")
         assert old_DOM == new_DOM
@@ -80,11 +81,11 @@ class TestStellarBurgersLoginForm:
         """При вводе некорректного пароля длинной менее 6 символов отображает ошибку 'Некорректный пароль'"""
         driver.get('https://stellarburgers.nomoreparties.site/login')
 
-        driver.find_element(*locator_email_field).send_keys('conclude2081@outlook.com')
-        driver.find_element(*locator_password_field).send_keys(password_list)
-        driver.find_element(*locator_login_button_any_forms).click()
+        driver.find_element(*locators.locator_email_field).send_keys('conclude2081@outlook.com')
+        driver.find_element(*locators.locator_password_field).send_keys(password_list)
+        driver.find_element(*locators.locator_login_button_any_forms).click()
 
-        error_message = driver.find_element(*locator_error_message)
+        error_message = driver.find_element(*locators.locator_error_message)
         assert error_message.text == 'Некорректный пароль'
 
     def test_login_correct_email_and_password_show_main_page(self, login):

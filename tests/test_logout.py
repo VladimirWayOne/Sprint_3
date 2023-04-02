@@ -2,7 +2,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import Chrome
-from locators import *
+from locators import Locators
+
+locators = Locators()
 
 
 class TestStellarBurgersLogout:
@@ -10,9 +12,9 @@ class TestStellarBurgersLogout:
         """ Выйти из аккаунта """
         driver = login
 
-        driver.find_element(*locator_profile_button).click()
+        driver.find_element(*locators.locator_profile_button).click()
 
-        WebDriverWait(driver, 3).until(EC.presence_of_element_located(locator_info_message_profile))
-        driver.find_element(*locator_logout_button).click()
-        WebDriverWait(driver, 3).until(EC.presence_of_element_located(locator_login_text_login_form))
+        WebDriverWait(driver, 3).until(EC.presence_of_element_located(locators.locator_info_message_profile))
+        driver.find_element(*locators.locator_logout_button).click()
+        WebDriverWait(driver, 3).until(EC.presence_of_element_located(locators.locator_login_text_login_form))
         assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login'

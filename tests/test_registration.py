@@ -2,7 +2,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-from locators import *
+from locators import Locators
+
+locators = Locators()
 
 
 class TestStellarBurgersRegistration:
@@ -12,24 +14,23 @@ class TestStellarBurgersRegistration:
         :param driver:
         :return:
         """
+        driver.find_element(*locators.locator_profile_button).click()
+        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locators.locator_login_button))
 
-        driver.find_element(*locator_profile_button).click()
-        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locator_login_button))
+        driver.find_element(*locators.locator_login_button).click()
 
-        driver.find_element(*locator_login_button).click()
-
-        driver.find_element(*locator_name_field).send_keys(
+        driver.find_element(*locators.locator_name_field).send_keys(
             'Гавриил Анчаров')
 
-        driver.find_element(*locator_email_field).send_keys('qwe')
+        driver.find_element(*locators.locator_email_field).send_keys('qwe')
 
-        driver.find_element(*locator_password_field).send_keys("""v)j"MY""")
+        driver.find_element(*locators.locator_password_field).send_keys("""v)j"MY""")
 
-        driver.find_element(*locator_register_button).click()
+        driver.find_element(*locators.locator_register_button).click()
 
-        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locator_error_message))
+        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locators.locator_error_message))
 
-        error_message = driver.find_elements(*locator_error_message)
+        error_message = driver.find_elements(*locators.locator_error_message)
 
         assert len(error_message) > 0
 
@@ -40,17 +41,17 @@ class TestStellarBurgersRegistration:
         :return:
         """
 
-        driver.find_element(*locator_profile_button).click()
-        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locator_login_button))
+        driver.find_element(*locators.locator_profile_button).click()
+        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locators.locator_login_button))
 
-        driver.find_element(*locator_login_button).click()
+        driver.find_element(*locators.locator_login_button).click()
 
-        driver.find_element(*locator_email_field).send_keys('qwe@owfinwE.YU')
+        driver.find_element(*locators.locator_email_field).send_keys('qwe@owfinwE.YU')
 
-        driver.find_element(*locator_password_field).send_keys("""v)j"MY""")
+        driver.find_element(*locators.locator_password_field).send_keys("""v)j"MY""")
         old_DOM = driver.find_element(By.XPATH, ".//*")
 
-        driver.find_element(*locator_register_button).click()
+        driver.find_element(*locators.locator_register_button).click()
 
         time.sleep(2)
         new_DOM = driver.find_element(By.XPATH, ".//*")
@@ -64,24 +65,24 @@ class TestStellarBurgersRegistration:
         :return:
         """
 
-        driver.find_element(*locator_profile_button).click()
-        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locator_login_button))
+        driver.find_element(*locators.locator_profile_button).click()
+        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locators.locator_login_button))
 
-        driver.find_element(*locator_login_button).click()
+        driver.find_element(*locators.locator_login_button).click()
 
-        driver.find_element(*locator_email_field).send_keys(
+        driver.find_element(*locators.locator_email_field).send_keys(
             'Гавриил Анчаров')
 
-        driver.find_element(*locator_email_field).send_keys('qwe')
+        driver.find_element(*locators.locator_email_field).send_keys('qwe')
 
-        driver.find_element(*locator_password_field).send_keys("123")
+        driver.find_element(*locators.locator_password_field).send_keys("123")
 
-        driver.find_element(*locator_register_button).click()
+        driver.find_element(*locators.locator_register_button).click()
 
         WebDriverWait(driver, 4).until(
-            EC.presence_of_element_located(locator_error_message))
+            EC.presence_of_element_located(locators.locator_error_message))
 
-        error_message = driver.find_element(*locator_error_message)
+        error_message = driver.find_element(*locators.locator_error_message)
         assert error_message.text == 'Некорректный пароль'
 
     def test_registration_correct_email_and_pwd_successful_registration(self, driver, user_data):
@@ -92,20 +93,20 @@ class TestStellarBurgersRegistration:
         :return:
         """
 
-        driver.find_element(*locator_profile_button).click()
-        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locator_login_button))
+        driver.find_element(*locators.locator_profile_button).click()
+        WebDriverWait(driver, 4).until(EC.presence_of_element_located(locators.locator_login_button))
 
-        driver.find_element(*locator_login_button).click()
+        driver.find_element(*locators.locator_login_button).click()
 
-        driver.find_element(*locator_name_field).send_keys(
+        driver.find_element(*locators.locator_name_field).send_keys(
             user_data['full_name'])
 
-        driver.find_element(*locator_email_field).send_keys(user_data['email'])
+        driver.find_element(*locators.locator_email_field).send_keys(user_data['email'])
 
-        driver.find_element(*locator_password_field).send_keys(user_data['password'])
+        driver.find_element(*locators.locator_password_field).send_keys(user_data['password'])
 
-        driver.find_element(*locator_register_button).click()
+        driver.find_element(*locators.locator_register_button).click()
 
         WebDriverWait(driver, 4).until(
-            EC.presence_of_element_located(locator_element_with_login_text))
+            EC.presence_of_element_located(locators.locator_element_with_login_text))
         assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login'
