@@ -7,11 +7,15 @@ from mimesis.enums import Locale
 import json
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from tests.locators import *
+
+from tests.locators import Locators
+from tests.urls import Urls
+
+locators = Locators()
+urls = Urls
 
 
 person = Person(locale=Locale.RU)
-url = 'https://stellarburgers.nomoreparties.site/'
 
 
 @pytest.fixture()
@@ -20,7 +24,7 @@ def driver():
     options.add_argument("--window-size=1500,900")
 
     driver = webdriver.Chrome(options=options)
-    driver.get(url)
+    driver.get(urls.url_main_paige)
 
     yield driver
     driver.quit()
@@ -40,7 +44,6 @@ def user_data():
     user_creds = json.dumps(user_data)
     with open('json_data.json', 'w', encoding='utf-8') as outfile:
         outfile.write(user_creds)
-    outfile.close()
     return user_data
 
 
@@ -49,12 +52,12 @@ def login(driver):
     """ Войти в аккаунт"""
     with open('json_data.json', 'r') as json_file:
         data = json.load(json_file)
-    driver.get('https://stellarburgers.nomoreparties.site/login')
+    driver.get(urls.url_login)
 
-    driver.find_element(*locator_email_field).send_keys(
+    driver.find_element(*locators.locator_email_field).send_keys(
         data['email'])
-    driver.find_element(*locator_password_field).send_keys(data['password'])
-    driver.find_element(*locator_login_button_any_forms).click()
+    driver.find_element(*locators.locator_password_field).send_keys(data['password'])
+    driver.find_element(*locators.locator_login_button_any_forms).click()
 
-    WebDriverWait(driver, 3).until(EC.presence_of_element_located(locator_order_button))
+    WebDriverWait(driver, 3).until(EC.presence_of_element_located(locators.locator_order_button))
     return driver

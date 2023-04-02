@@ -3,9 +3,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from locators import Locators
+from urls import Urls
 
 locators = Locators()
-
+urls = Urls()
 
 class TestStellarBurgersRegistration:
     def test_registration_incorrect_email_show_error(self, driver):
@@ -109,4 +110,4 @@ class TestStellarBurgersRegistration:
 
         WebDriverWait(driver, 4).until(
             EC.presence_of_element_located(locators.locator_element_with_login_text))
-        assert driver.current_url == 'https://stellarburgers.nomoreparties.site/login'
+        assert driver.current_url == urls.url_login
