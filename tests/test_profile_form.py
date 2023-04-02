@@ -7,6 +7,7 @@ from urls import Urls
 
 locators = Locators()
 urls = Urls()
+
 class TestStellarBurgersProfileForm:
     def test_click_profile_button_open_profile_form(self, login):
         """ Открыть личный кабинет """
